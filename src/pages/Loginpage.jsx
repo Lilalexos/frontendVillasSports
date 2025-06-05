@@ -8,20 +8,22 @@ function Loginpage() {
   const [mensaje, setMensaje] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
-        { email, password }
-      );
-      setMensaje('Inicio de sesión exitoso');
-      console.log('Token recibido:', response.data.token);
-    } catch (error) {
-      setMensaje('Credenciales incorrectas o error del servidor');
-      console.error(error);
-    }
-  };
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/login`,
+      { email, password },
+      { withCredentials: true } // Esto permite enviar y recibir cookies
+    );
+
+    setMensaje('Inicio de sesión exitoso');
+    console.log('Usuario recibido:', response.data);
+  } catch (error) {
+    setMensaje('Credenciales incorrectas o error del servidor');
+    console.error(error);
+  }
+};
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
@@ -59,7 +61,7 @@ function Loginpage() {
         </button>
       </form>
 
-      {mensaje && <p style={{ marginTop: '1rem', color: 'green' }}>{mensaje}</p>}
+      {mensaje && <p style={{ marginTop: '1rem', color: mensaje.includes('error') || mensaje.includes('incorrectos') ? 'red' : 'green' }}>{mensaje}</p>}
     </div>
   );
 }
