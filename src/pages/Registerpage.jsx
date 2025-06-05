@@ -21,6 +21,8 @@ export default function Registerpage() {
     e.preventDefault();
 
     try {
+      console.log("BASE_URL:", BASE_URL);
+
       const res = await fetch(`${BASE_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
