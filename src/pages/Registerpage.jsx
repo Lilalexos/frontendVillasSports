@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Registerpage() {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
 
-  //Aqui se importa la ruta del .env para las peticiones
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -21,56 +23,59 @@ export default function Registerpage() {
     e.preventDefault();
 
     try {
-      console.log("BASE_URL:", BASE_URL);
+      const res = await axios.post(
+        `${BASE_URL}/register`,
+        formData,
+        { withCredentials: true }
+      );
 
-      const res = await fetch(`${BASE_URL}/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const data = res.data;
 
-      if (!res.ok) {
-        throw new Error('Error en el registro');
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        alert("Registro exitoso!");
+        navigate("/eventos");
+      } else {
+        alert("Registro exitoso! Por favor inicia sesión.");
+        navigate("/login");
       }
-
-      const data = await res.json();
-      alert('Registro exitoso!');
-      console.log(data);
     } catch (error) {
-      alert(error.message);
+      alert("Error en el registro: " + (error.response?.data?.message || error.message));
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
+    <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "auto" }}>
       <h2>Registro de Usuario</h2>
-      <input 
-        name="username" 
-        placeholder="Usuario" 
-        value={formData.username} 
-        onChange={handleChange} 
-        required 
-        style={{ display: 'block', width: '100%', marginBottom: '10px' }}
+      <input
+        name="username"
+        placeholder="Usuario"
+        value={formData.username}
+        onChange={handleChange}
+        required
+        style={{ display: "block", width: "100%", marginBottom: "10px" }}
       />
-      <input 
-        name="email" 
-        type="email" 
-        placeholder="Correo electrónico" 
-        value={formData.email} 
-        onChange={handleChange} 
-        required 
-        style={{ display: 'block', width: '100%', marginBottom: '10px' }}
+      <input
+        name="email"
+        type="email"
+        placeholder="Correo electrónico"
+        value={formData.email}
+        onChange={handleChange}
+        required
+        style={{ display: "block", width: "100%", marginBottom: "10px" }}
       />
-      <input 
-        name="password" 
-        type="password" 
-        placeholder="Contraseña" 
-        value={formData.password} 
-        onChange={handleChange} 
-        required 
-        style={{ display: 'block', width: '100%', marginBottom: '10px' }}
+      <input
+        name="password"
+        type="password"
+        placeholder="Contraseña"
+        value={formData.password}
+        onChange={handleChange}
+        required
+        style={{ display: "block", width: "100%", marginBottom: "10px" }}
       />
-      <button type="submit" style={{ padding: '8px 16px' }}>Registrar</button>
+      <button type="submit" style={{ padding: "8px 16px" }}>
+        Registrar
+      </button>
     </form>
   );
 }
