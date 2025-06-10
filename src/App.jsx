@@ -5,6 +5,7 @@ import EventosListPage from './pages/EventosListPage';
 import EventoFormPage from './pages/EventoFormPage';
 import EventoDetailPage from './pages/EventoDetailPage';
 import UserEventosPage from './pages/UserEventosPage';
+import DashboardPage from './pages/DashboardPage';
 
 // Componente para proteger rutas
 const PrivateRoute = ({ children }) => {
@@ -58,6 +59,15 @@ function App() {
           element={
             <PrivateRoute>
               <EventoDetailPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <DashboardPage />
             </PrivateRoute>
           }
         />
