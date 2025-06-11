@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Loginpage.css";
+import videoFondo from "../assets/fondo.mp4";
+import { FaArrowDown } from "react-icons/fa";
 
 function Loginpage() {
   const [email, setEmail] = useState("");
@@ -38,79 +40,91 @@ function Loginpage() {
     return () => setMensaje("");
   }, []);
 
+  const scrollToLogin = () => {
+    const loginSection = document.getElementById("login-section");
+    if (loginSection) {
+      loginSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <h1>Bienvenido a Villa’s Sports</h1>
-      <p>
-        Somos una plataforma dedicada a la organización de eventos deportivos y
-        actividades recreativas. Aquí podrás registrarte, iniciar sesión y
-        gestionar tus eventos de una manera super sencilla.
-      </p>
+    <div className="login-page-container">
+      <video className="video-background" autoPlay loop muted>
+        <source src={videoFondo} type="video/mp4" />
+        Tu navegador no soporta el video.
+      </video>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{ maxWidth: "400px", marginTop: "2rem" }}
-      >
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Correo electrónico:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
-
-        <button type="submit" style={{ padding: "10px 20px" }}>
-          Iniciar sesión
-        </button>
-      </form>
-
-      {mensaje && (
-        <p
-          style={{
-            marginTop: "1rem",
-            color:
-              mensaje.toLowerCase().includes("error") ||
-              mensaje.toLowerCase().includes("incorrectos")
-                ? "red"
-                : "green",
-          }}
-        >
-          {mensaje}
+      <div className="welcome-content">
+        <h1 className="titulo-verde">Bienvenido a Villa’s Sports</h1>
+        <p className="descripcion">
+          Somos una plataforma dedicada a la organización de eventos deportivos y
+          actividades recreativas. Aquí podrás registrarte, iniciar sesión y
+          gestionar tus eventos de una manera sencilla.
         </p>
-      )}
+        <FaArrowDown className="flecha-bajar" onClick={scrollToLogin} />
+      </div>
 
-      {/* Crear cuenta */}
-      <p style={{ marginTop: "1.5rem" }}>
-        ¿No tienes cuenta?{" "}
-        <button
-          onClick={() => navigate("/register")}
-          style={{
-            background: "none",
-            border: "none",
-            color: "blue",
-            textDecoration: "underline",
-            cursor: "pointer",
-            padding: 0,
-            fontSize: "1em",
-          }}
-        >
-          Regístrate aquí
-        </button>
-      </p>
+      <div id="login-section" className="login-section">
+        <h1 className="login-title">Villa’s Sports</h1>
+        <div id="login-form">
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: "1rem" }}>
+              <label>Correo electrónico:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div style={{ marginBottom: "1rem" }}>
+              <label>Contraseña:</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <button type="submit">Iniciar sesión</button>
+          </form>
+
+          {mensaje && (
+            <p
+              style={{
+                marginTop: "1rem",
+                color:
+                  mensaje.toLowerCase().includes("error") ||
+                  mensaje.toLowerCase().includes("incorrectos")
+                    ? "red"
+                    : "lime",
+              }}
+            >
+              {mensaje}
+            </p>
+          )}
+
+          <p style={{ marginTop: "1.5rem" }}>
+            ¿No tienes cuenta?{" "}
+            <button
+              onClick={() => navigate("/register")}
+              style={{
+                background: "none",
+                border: "none",
+                color: "aqua",
+                textDecoration: "underline",
+                cursor: "pointer",
+                padding: 0,
+                fontSize: "1em",
+              }}
+            >
+              Regístrate aquí
+            </button>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

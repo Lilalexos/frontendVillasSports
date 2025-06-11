@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { crearEvento, obtenerEventoPorId, actualizarEvento } from "../services/eventosService";
+import {
+  crearEvento,
+  obtenerEventoPorId,
+  actualizarEvento,
+} from "../services/eventosService";
 import { useAuth } from "../hooks/useAuth";
+import "./EventoFormPage.css";
 
 function EventoFormPage() {
   const { id } = useParams();
@@ -22,7 +27,7 @@ function EventoFormPage() {
           nombreEvento: res.data.nombreEvento,
           tipoEvento: res.data.tipoEvento,
           ubicacion: res.data.ubicacion,
-          fechaHora: res.data.fechaHora?.slice(0, 16), // formato para input tipo datetime-local
+          fechaHora: res.data.fechaHora?.slice(0, 16),
         });
       });
     }
@@ -48,43 +53,57 @@ function EventoFormPage() {
   };
 
   return (
-    <div>
-      <h2>{id ? "Editar Evento" : "Crear Evento"}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="nombreEvento"
-          placeholder="Nombre del evento"
-          value={evento.nombreEvento}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="tipoEvento"
-          placeholder="Tipo de evento"
-          value={evento.tipoEvento}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="ubicacion"
-          placeholder="Ubicación"
-          value={evento.ubicacion}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="datetime-local"
-          name="fechaHora"
-          value={evento.fechaHora}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">{id ? "Guardar cambios" : "Crear evento"}</button>
-        <button type="button" onClick={() => navigate(-1)}>Cancelar</button>
-      </form>
+    <div className="pantalla">
+      <div className="barra-superior">
+        <div className="barra-izquierda">
+          {id ? "Editar Evento" : "Crear Evento"}
+        </div>
+        <div className="barra-centro">Villa’s Sport</div>
+        <div className="barra-derecha">
+          <button onClick={() => navigate(-1)}>Cancelar</button>
+        </div>
+      </div>
+
+      <div className="form-container">
+        <form onSubmit={handleSubmit} className="formulario-evento">
+          <input
+            type="text"
+            name="nombreEvento"
+            placeholder="Nombre del evento"
+            value={evento.nombreEvento}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="tipoEvento"
+            placeholder="Tipo de evento"
+            value={evento.tipoEvento}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="ubicacion"
+            placeholder="Ubicación"
+            value={evento.ubicacion}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="datetime-local"
+            name="fechaHora"
+            value={evento.fechaHora}
+            onChange={handleChange}
+            required
+          />
+          <div className="botones-formulario">
+            <button type="submit">
+              {id ? "Guardar cambios" : "Crear evento"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

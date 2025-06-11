@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { obtenerEventosPorUsuario, eliminarEvento } from "../services/eventosService";
 import { useNavigate } from "react-router-dom";
+import "./UserEventosPage.css";
 
 function UserEventosPage() {
   const navigate = useNavigate();
@@ -43,29 +44,46 @@ function UserEventosPage() {
   };
 
   return (
-    <div>
-      <h2>Mis Eventos</h2>
-      {/* Botón de volver general */}
-      <button onClick={handleVolver}>Volver a Lista de Eventos</button>
+    <div className="pantalla">
+      <div className="barra-superior">
+        <div className="barra-izquierda">Mis Eventos</div>
+        <div className="barra-centro">Villa’s Sport</div>
+        <div className="barra-derecha">
+          <button onClick={handleVolver}>Volver</button>
+        </div>
+      </div>
 
-      {cargando && <p>Cargando eventos...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className="contenedor-eventos">
+        {cargando && <p className="cargando">Cargando eventos...</p>}
+        {error && <p className="error">{error}</p>}
+        {!cargando && eventos.length === 0 && !error && (
+          <p className="error">No tienes eventos para mostrar.</p>
+        )}
 
-      <ul>
-        {!cargando && eventos.length === 0 && !error && <p>No tienes eventos para mostrar.</p>}
-
-        {eventos.map((evento) => (
-          <li key={evento._id}>
-            <h3>{evento.nombreEvento}</h3>
-            <p>Tipo: {evento.tipoEvento}</p>
-            <p>Ubicación: {evento.ubicacion}</p>
-            <p>Fecha: {new Date(evento.fechaHora).toLocaleString()}</p>
-
-            <button onClick={() => handleEditar(evento._id)}>Editar</button>
-            <button onClick={() => handleEliminar(evento._id)}>Eliminar</button>
-          </li>
-        ))}
-      </ul>
+        <ul className="lista-eventos">
+          {eventos.map((evento) => (
+            <li
+              key={evento._id}
+              className={
+                evento.tipoEvento === "futbol"
+                  ? "evento-futbol"
+                  : evento.tipoEvento === "basquet"
+                  ? "evento-basquet"
+                  : "evento-otro"
+              }
+            >
+              <span className="badge">{evento.tipoEvento}</span>
+              <h3>{evento.nombreEvento}</h3>
+              <p>Ubicación: {evento.ubicacion}</p>
+              <p>Fecha: {new Date(evento.fechaHora).toLocaleString()}</p>
+              <div>
+                <button onClick={() => handleEditar(evento._id)}>Editar</button>
+                <button onClick={() => handleEliminar(evento._id)}>Eliminar</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

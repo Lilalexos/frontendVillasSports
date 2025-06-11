@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { obtenerEventoPorId, eliminarEvento } from "../services/eventosService";
+import {
+  obtenerEventoPorId,
+  eliminarEvento,
+} from "../services/eventosService";
 import { useAuth } from "../hooks/useAuth";
+import "./EventosDetailPage.css";
 
 function EventoDetailPage() {
   const { id } = useParams();
@@ -39,27 +43,32 @@ function EventoDetailPage() {
     navigate(`/eventos/editar/${id}`);
   };
 
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!evento) return <p>Cargando detalles...</p>;
+  if (error) return <p className="mensaje-error">{error}</p>;
+  if (!evento) return <p className="mensaje-cargando">Cargando detalles...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>{evento.nombreEvento}</h1>
-      <p><strong>Tipo:</strong> {evento.tipoEvento}</p>
-      <p><strong>Ubicación:</strong> {evento.ubicacion}</p>
-      <p><strong>Fecha y hora:</strong> {new Date(evento.fechaHora).toLocaleString()}</p>
-      <p><strong>Creado por:</strong> {evento.user?.username || "Desconocido"}</p>
-
-      {/* Mostrar los botones solo si el evento es del usuario logueado */}
-      {user && evento.user?._id === user._id && (
-        <div style={{ marginTop: "1rem" }}>
-          <button onClick={handleEditar} style={{ marginRight: "1rem" }}>Editar</button>
-          <button onClick={handleEliminar}>Eliminar</button>
+    <div className="pantalla">
+      <div className="barra-superior">
+        <div className="barra-izquierda">Detalles del Evento</div>
+        <div className="barra-centro">Villa’s Sport</div>
+        <div className="barra-derecha">
+          <button onClick={() => navigate("/eventos")}>Volver</button>
         </div>
-      )}
+      </div>
 
-      <div style={{ marginTop: "1rem" }}>
-        <button onClick={() => navigate("/eventos")}>Volver a lista</button>
+      <div className="detalle-contenedor">
+        <h1>{evento.nombreEvento}</h1>
+        <p><strong>Tipo:</strong> {evento.tipoEvento}</p>
+        <p><strong>Ubicación:</strong> {evento.ubicacion}</p>
+        <p><strong>Fecha y hora:</strong> {new Date(evento.fechaHora).toLocaleString()}</p>
+        <p><strong>Creado por:</strong> {evento.user?.username || "Desconocido"}</p>
+
+        {user && evento.user?._id === user._id && (
+          <div className="botones-acciones">
+            <button onClick={handleEditar}>Editar</button>
+            <button onClick={handleEliminar} className="btn-eliminar">Eliminar</button>
+          </div>
+        )}
       </div>
     </div>
   );

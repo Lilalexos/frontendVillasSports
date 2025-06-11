@@ -1,0 +1,121 @@
+.pantalla {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+/* BARRA SUPERIOR */
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid #00ff88;
+}
+
+.barra-izquierda,
+.barra-centro,
+.barra-derecha {
+  flex: 1;
+  text-align: center;
+}
+
+.barra-izquierda {
+  text-align: left;
+}
+
+.barra-centro {
+  color: #00ff88;
+}
+
+.barra-derecha {
+  text-align: right;
+}
+
+.barra-derecha button {
+  background-color: #00ff88;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.barra-derecha button:hover {
+  background-color: #00cc66;
+}
+
+/* FORMULARIO */
+.form-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 30px auto;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 255, 136, 0.1);
+}
+
+.formulario-evento {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formulario-evento input {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-evento input:focus {
+  border-color: #00ff88;
+}
+
+.botones-formulario {
+  display: flex;
+  justify-content: center;
+}
+
+.botones-formulario button {
+  background-color: #00ff88;
+  color: black;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botones-formulario button:hover {
+  background-color: #00cc66;
+}
+
+@media (max-width: 600px) {
+  .barra-superior {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .barra-izquierda,
+  .barra-centro,
+  .barra-derecha {
+    text-align: center;
+  }
+
+  .form-container {
+    padding: 15px;
+    margin: 20px;
+  }
+}
