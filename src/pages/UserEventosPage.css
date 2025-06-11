@@ -1,0 +1,164 @@
+.pantalla {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+/* BARRA SUPERIOR */
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid #00ff88;
+}
+
+.barra-izquierda,
+.barra-centro,
+.barra-derecha {
+  flex: 1;
+  text-align: center;
+}
+
+.barra-izquierda {
+  text-align: left;
+}
+
+.barra-centro {
+  color: #00ff88;
+}
+
+.barra-derecha {
+  text-align: right;
+}
+
+.barra-derecha button {
+  background-color: #00ff88;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.barra-derecha button:hover {
+  background-color: #00cc66;
+}
+
+/* CONTENEDOR */
+.contenedor-eventos {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* LISTA DE EVENTOS */
+.lista-eventos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-eventos li {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 255, 136, 0.2);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  max-height: 250px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+.lista-eventos li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 255, 136, 0.3);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.evento-futbol {
+  border-left: 6px solid #00ff88;
+}
+
+.evento-basquet {
+  border-left: 6px solid #ff8800;
+}
+
+.evento-otro {
+  border-left: 6px solid #0088ff;
+}
+
+.lista-eventos h3 {
+  margin: 0 0 10px;
+  color: #00ff88;
+}
+
+.lista-eventos p {
+  margin: 4px 0;
+}
+
+.lista-eventos button {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 25px;
+  background-color: #6c757d;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lista-eventos button:hover {
+  background-color: #5a6268;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #00ff88;
+  color: black;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  align-self: flex-start;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+  .barra-superior {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .barra-izquierda,
+  .barra-centro,
+  .barra-derecha {
+    text-align: center;
+  }
+}

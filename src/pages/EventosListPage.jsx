@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { obtenerEventos, eliminarEvento } from "../services/eventosService";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "./EventosListPage.css";
 
 function EventosListPage() {
   const { user } = useAuth();
@@ -52,109 +53,105 @@ function EventosListPage() {
     cargarEventos();
   }, [cargarEventos]);
 
-  const handleFiltroChange = (e) => {
+  const cambiarFiltro = (e) => {
     const { name, value } = e.target;
     setFiltros((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleBuscar = () => {
+  const buscar = () => {
     setFiltrosAplicados(filtros);
   };
 
-  const handleEliminar = async (id) => {
+  const eliminar = async (id) => {
     if (window.confirm("¿Seguro que quieres eliminar este evento?")) {
       await eliminarEvento(id);
       cargarEventos();
     }
   };
 
-  const handleEditar = (id) => {
+  const editar = (id) => {
     navigate(`/eventos/editar/${id}`);
   };
 
-  const handleVer = (id) => {
+  const ver = (id) => {
     navigate(`/eventos/${id}`);
   };
 
-  const handleCrearEvento = () => {
+  const crearEvento = () => {
     navigate("/eventos/nuevo");
   };
 
-  const handleVerMisEventos = () => {
+  const verMisEventos = () => {
     navigate("/mis-eventos");
   };
 
-  const handleLogout = () => {
+  const cerrarSesion = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <button
-        onClick={handleLogout}
-        style={{
-          float: "right",
-          padding: "8px 16px",
-          marginBottom: "1rem",
-          cursor: "pointer",
-        }}
-      >
-        Cerrar sesión
-      </button>
-
-      <h2>Lista de Eventos</h2>
-
-      <div>
-        <input
-          type="text"
-          name="tipoEvento"
-          placeholder="Filtrar por tipo de evento"
-          value={filtros.tipoEvento}
-          onChange={handleFiltroChange}
-        />
-        <input
-          type="text"
-          name="username"
-          placeholder="Filtrar por nombre de usuario"
-          value={filtros.username}
-          onChange={handleFiltroChange}
-        />
-        <button onClick={handleBuscar}>Buscar</button>
+    <div className="pantalla">
+      <div className="barra-superior">
+        <div className="barra-izquierda">Villa’s Sports</div>
+        <div className="barra-centro">Lista de eventos</div>
+        <div className="barra-derecha">
+          <button onClick={cerrarSesion}>Cerrar sesión</button>
+        </div>
       </div>
 
-      <div style={{ marginTop: "10px" }}>
-        <button onClick={handleCrearEvento}>Crear nuevo evento</button>{" "}
-        <button onClick={handleVerMisEventos}>Ver mis eventos</button>
+      <div className="contenedor-eventos">
+        <div className="filtros">
+          <input
+            type="text"
+            name="tipoEvento"
+            placeholder="Filtrar por tipo de evento"
+            value={filtros.tipoEvento}
+            onChange={cambiarFiltro}
+          />
+          <input
+            type="text"
+            name="username"
+            placeholder="Filtrar por nombre de usuario"
+            value={filtros.username}
+            onChange={cambiarFiltro}
+          />
+          <button onClick={buscar}>Buscar</button>
+        </div>
+
+        <div className="acciones">
+          <button onClick={crearEvento}>Crear nuevo evento</button>
+          <button onClick={verMisEventos}>Ver mis eventos</button>
+        </div>
+
+        {cargando && <p>Cargando eventos...</p>}
+        {error && <p className="error">{error}</p>}
+
+        <ul className="lista-eventos">
+          {!cargando && eventos.length === 0 && !error && (
+            <p>No hay eventos para mostrar.</p>
+          )}
+
+          {eventos.map((evento) => (
+            <li key={evento._id}>
+              <h3>{evento.nombreEvento}</h3>
+              <p>Tipo: {evento.tipoEvento}</p>
+              <p>Ubicación: {evento.ubicacion}</p>
+              <p>Fecha: {new Date(evento.fechaHora).toLocaleString()}</p>
+              <p>Creador: {evento.user?.username || "Desconocido"}</p>
+
+              {user && evento.user?._id === user._id && (
+                <>
+                  <button onClick={() => editar(evento._id)}>Editar</button>
+                  <button onClick={() => eliminar(evento._id)}>Eliminar</button>
+                </>
+              )}
+
+              <button onClick={() => ver(evento._id)}>Ver detalles</button>
+            </li>
+          ))}
+        </ul>
       </div>
-
-      {cargando && <p>Cargando eventos...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <ul>
-        {!cargando && eventos.length === 0 && !error && (
-          <p>No hay eventos para mostrar.</p>
-        )}
-
-        {eventos.map((evento) => (
-          <li key={evento._id} style={{ marginBottom: "1rem" }}>
-            <h3>{evento.nombreEvento}</h3>
-            <p>Tipo: {evento.tipoEvento}</p>
-            <p>Ubicación: {evento.ubicacion}</p>
-            <p>Fecha: {new Date(evento.fechaHora).toLocaleString()}</p>
-            <p>Creador: {evento.user?.username || "Desconocido"}</p>
-
-            {user && evento.user?._id === user._id && (
-              <>
-                <button onClick={() => handleEditar(evento._id)}>Editar</button>{" "}
-                <button onClick={() => handleEliminar(evento._id)}>Eliminar</button>
-              </>
-            )}
-
-            <button onClick={() => handleVer(evento._id)}>Ver detalles</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

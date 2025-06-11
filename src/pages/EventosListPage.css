@@ -1,0 +1,167 @@
+.pantalla {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  min-height: 100vh;
+  color: rgb(0, 0, 0);
+}
+
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid #00ff88;
+}
+
+.barra-izquierda,
+.barra-centro,
+.barra-derecha {
+  flex: 1;
+  text-align: center;
+}
+
+.barra-izquierda {
+  text-align: left;
+}
+
+.barra-centro {
+  color: #00ff88;
+}
+
+.barra-derecha {
+  text-align: right;
+}
+
+.barra-derecha button {
+  background-color: #00ff88;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.barra-derecha button:hover {
+  background-color: #00cc66;
+}
+
+.contenedor-eventos {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.filtros input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #00ff88;
+  border-radius: 25px;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+}
+
+.filtros input::placeholder {
+  color: #000000;
+}
+
+.filtros button {
+  background-color: #00ff88;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filtros button:hover {
+  background-color: #00cc66;
+}
+
+.acciones {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.acciones button {
+  background-color: #00ff88;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.acciones button:hover {
+  background-color: #00cc66;
+}
+
+.lista-eventos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* mínimo 300px por evento */
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.lista-eventos li {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 255, 136, 0.2);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  max-height: 250px;
+}
+
+.lista-eventos h3 {
+  margin: 0 0 10px;
+  color: #00ff88;
+}
+
+.lista-eventos p {
+  margin: 4px 0;
+}
+
+.lista-eventos button {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 25px;
+  background-color: #6c757d;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lista-eventos button:hover {
+  background-color: #5a6268;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 15px;
+}

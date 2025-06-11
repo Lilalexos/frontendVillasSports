@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./Registerpage.css"; // Asegúrate de tener este archivo
+import videoFondo from "../assets/fondo.mp4";
 
 export default function Registerpage() {
   const [formData, setFormData] = useState({
@@ -21,14 +23,10 @@ export default function Registerpage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post(
-        `${BASE_URL}/register`,
-        formData,
-        { withCredentials: true }
-      );
-
+      const res = await axios.post(`${BASE_URL}/register`, formData, {
+        withCredentials: true,
+      });
       const data = res.data;
 
       if (data.token) {
@@ -40,42 +38,51 @@ export default function Registerpage() {
         navigate("/login");
       }
     } catch (error) {
-      alert("Error en el registro: " + (error.response?.data?.message || error.message));
+      alert(
+        "Error en el registro: " +
+          (error.response?.data?.message || error.message)
+      );
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "auto" }}>
-      <h2>Registro de Usuario</h2>
-      <input
-        name="username"
-        placeholder="Usuario"
-        value={formData.username}
-        onChange={handleChange}
-        required
-        style={{ display: "block", width: "100%", marginBottom: "10px" }}
-      />
-      <input
-        name="email"
-        type="email"
-        placeholder="Correo electrónico"
-        value={formData.email}
-        onChange={handleChange}
-        required
-        style={{ display: "block", width: "100%", marginBottom: "10px" }}
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="Contraseña"
-        value={formData.password}
-        onChange={handleChange}
-        required
-        style={{ display: "block", width: "100%", marginBottom: "10px" }}
-      />
-      <button type="submit" style={{ padding: "8px 16px" }}>
-        Registrar
-      </button>
-    </form>
+    <div className="register-page">
+      <video src={videoFondo} autoPlay loop muted className="video-background" />
+      <div className="content">
+        <h1 className="titulo">Regístrate a Villa’s Sport</h1>
+        <form onSubmit={handleSubmit} className="register-form">
+          <label htmlFor="username">Nombre de usuario</label>
+          <input
+            name="username"
+            placeholder="Usuario"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="email">Correo electrónico</label>
+          <input
+            name="email"
+            type="email"
+            placeholder="Correo electrónico"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="password">Contraseña</label>
+          <input
+            name="password"
+            type="password"
+            placeholder="Contraseña"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+
+          <button type="submit">Registrar</button>
+        </form>
+      </div>
+    </div>
   );
 }
