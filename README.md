@@ -1,12 +1,19 @@
-# React + Vite
+# Villa’s Sport
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Villa’s Sport** es una aplicación web desarrollada como proyecto académico, orientada a la gestión de eventos deportivos. Permite a los usuarios registrarse, iniciar sesión, crear y administrar sus propios eventos, y visualizar estadísticas relevantes. También cuenta con una interfaz moderna y responsiva.
 
-Currently, two official plugins are available:
+## Tecnologías utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React + Vite, TailwindCSS, Context API, React Router
+- **Backend:** Node.js, Express, MongoDB, Mongoose
+- **Autenticación:** JWT (tokens), Cookies HttpOnly
+- **Estadísticas:** jsPDF + html2canvas para exportar reportes en PDF
 
-## Expanding the ESLint configuration
+## Funcionalidades destacadas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Registro y login de usuarios con validaciones de correo y usuario único.
+- Doble campo para verificación de contraseña con botón de mostrar/ocultar.
+- CRUD completo de eventos deportivos.
+- Vista de eventos filtrados por usuario.
+- Panel de estadísticas con total de eventos, usuarios y gráfico mensual.
+- Exportación de estadísticas a PDF.
