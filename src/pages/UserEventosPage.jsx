@@ -1,5 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
-import { obtenerEventosPorUsuario, eliminarEvento } from "../services/eventosService";
+import {
+  obtenerEventosPorUsuario,
+  eliminarEvento,
+} from "../services/eventosService";
 import { useNavigate } from "react-router-dom";
 import "./UserEventosPage.css";
 
@@ -78,7 +81,9 @@ function UserEventosPage() {
               <p>Fecha: {new Date(evento.fechaHora).toLocaleString()}</p>
               <div>
                 <button onClick={() => handleEditar(evento._id)}>Editar</button>
-                <button onClick={() => handleEliminar(evento._id)}>Eliminar</button>
+                <button onClick={() => handleEliminar(evento._id)}>
+                  Eliminar
+                </button>
               </div>
             </li>
           ))}

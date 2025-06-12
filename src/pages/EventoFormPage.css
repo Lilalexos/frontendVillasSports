@@ -119,3 +119,18 @@
     margin: 20px;
   }
 }
+
+.formulario-evento textarea {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-evento textarea:focus {
+  border-color: #00ff88;
+}

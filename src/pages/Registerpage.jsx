@@ -47,7 +47,13 @@ export default function Registerpage() {
 
   return (
     <div className="register-page">
-      <video src={videoFondo} autoPlay loop muted className="video-background" />
+      <video
+        src={videoFondo}
+        autoPlay
+        loop
+        muted
+        className="video-background"
+      />
       <div className="content">
         <h1 className="titulo">Regístrate a Villa’s Sport</h1>
         <form onSubmit={handleSubmit} className="register-form">

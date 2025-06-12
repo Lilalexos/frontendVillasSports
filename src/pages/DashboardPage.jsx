@@ -11,9 +11,12 @@ import {
 } from "recharts";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useNavigate } from "react-router-dom";
+import "./DashboardPage.css";
 
 function DashboardPage() {
   const [data, setData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
@@ -25,39 +28,62 @@ function DashboardPage() {
 
   const exportToPDF = () => {
     const input = document.getElementById("dashboard-content");
-    html2canvas(input).then((canvas) => {
+
+    input.classList.add("pdf-export");
+
+    html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      const marginX = 10;
+      const marginY = 10;
+
+      pdf.addImage(
+        imgData,
+        "PNG",
+        marginX,
+        marginY,
+        pdfWidth - 2 * marginX,
+        pdfHeight
+      );
       pdf.save("reporte-dashboard.pdf");
+
+      input.classList.remove("pdf-export");
     });
   };
 
+  const volverAEventos = () => {
+    navigate("/eventos");
+  };
+
   if (!data)
-    return <p className="text-center mt-10">Cargando estadísticas...</p>;
+    return <p className="mensaje-cargando">Cargando estadísticas...</p>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Panel de Estadísticas</h1>
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Panel de Estadísticas</h1>
+        <button className="volver-btn" onClick={volverAEventos}>
+          Volver a eventos
+        </button>
+      </div>
 
-      {/* Aquí va el bloque a capturar en PDF */}
       <div id="dashboard-content">
-        <div className="grid grid-cols-2 gap-6 mb-10">
-          <div className="bg-white shadow-md rounded-2xl p-4">
-            <h2 className="text-xl font-semibold">Total de Eventos</h2>
-            <p className="text-3xl text-blue-600">{data.totalEventos}</p>
+        <div className="dashboard-cards">
+          <div className="dashboard-card blue-card">
+            <h2 className="card-title">Total de Eventos</h2>
+            <p className="card-value">{data.totalEventos}</p>
           </div>
-          <div className="bg-white shadow-md rounded-2xl p-4">
-            <h2 className="text-xl font-semibold">Total de Usuarios</h2>
-            <p className="text-3xl text-green-600">{data.totalUsuarios}</p>
+          <div className="dashboard-card green-card">
+            <h2 className="card-title">Total de Usuarios</h2>
+            <p className="card-value">{data.totalUsuarios}</p>
           </div>
         </div>
 
-        <div className="bg-white shadow-md rounded-2xl p-4">
-          <h2 className="text-xl font-semibold mb-4">Eventos por Mes</h2>
+        <div className="chart-container">
+          <h2 className="card-title">Eventos por Mes</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={data.eventosPorMes}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -70,11 +96,7 @@ function DashboardPage() {
         </div>
       </div>
 
-      {/* Botón para exportar */}
-      <button
-        onClick={exportToPDF}
-        className="mt-6 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
-      >
+      <button onClick={exportToPDF} className="export-button">
         Exportar PDF
       </button>
     </div>

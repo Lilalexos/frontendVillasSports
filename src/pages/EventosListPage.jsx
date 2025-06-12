@@ -85,6 +85,10 @@ function EventosListPage() {
     navigate("/mis-eventos");
   };
 
+  const irADashboard = () => {
+    navigate("/dashboard");
+  };
+
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -122,6 +126,7 @@ function EventosListPage() {
         <div className="acciones">
           <button onClick={crearEvento}>Crear nuevo evento</button>
           <button onClick={verMisEventos}>Ver mis eventos</button>
+          <button onClick={irADashboard}>Ir al Dashboard</button>
         </div>
 
         {cargando && <p>Cargando eventos...</p>}

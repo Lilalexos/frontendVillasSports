@@ -57,8 +57,8 @@ function Loginpage() {
       <div className="welcome-content">
         <h1 className="titulo-verde">Bienvenido a Villa’s Sports</h1>
         <p className="descripcion">
-          Somos una plataforma dedicada a la organización de eventos deportivos y
-          actividades recreativas. Aquí podrás registrarte, iniciar sesión y
+          Somos una plataforma dedicada a la organización de eventos deportivos
+          y actividades recreativas. Aquí podrás registrarte, iniciar sesión y
           gestionar tus eventos de una manera sencilla.
         </p>
         <FaArrowDown className="flecha-bajar" onClick={scrollToLogin} />

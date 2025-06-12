@@ -116,6 +116,16 @@
   margin: 4px 0;
 }
 
+.descripcion-evento {
+  font-style: italic;
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 8px;
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .lista-eventos button {
   margin-top: 10px;
   margin-right: 10px;

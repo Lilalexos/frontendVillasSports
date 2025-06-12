@@ -18,6 +18,7 @@ function EventoFormPage() {
     tipoEvento: "",
     ubicacion: "",
     fechaHora: "",
+    descripcion: "",
   });
 
   useEffect(() => {
@@ -28,6 +29,7 @@ function EventoFormPage() {
           tipoEvento: res.data.tipoEvento,
           ubicacion: res.data.ubicacion,
           fechaHora: res.data.fechaHora?.slice(0, 16),
+          descripcion: res.data.descripcion || "",
         });
       });
     }
@@ -96,6 +98,14 @@ function EventoFormPage() {
             value={evento.fechaHora}
             onChange={handleChange}
             required
+          />
+          <textarea
+            name="descripcion"
+            placeholder="Descripción del evento"
+            value={evento.descripcion}
+            onChange={handleChange}
+            rows={4}
+            className="textarea-descripcion"
           />
           <div className="botones-formulario">
             <button type="submit">

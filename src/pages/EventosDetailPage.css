@@ -73,6 +73,17 @@
   margin-bottom: 10px;
 }
 
+/* DESCRIPCIÓN */
+.descripcion-evento {
+  font-style: italic;
+  color: #444;
+  margin-top: 15px;
+}
+
+.detalle-contenedor p strong {
+  color: #00cc66;
+}
+
 /* BOTONES DE ACCIÓN */
 .botones-acciones {
   display: flex;

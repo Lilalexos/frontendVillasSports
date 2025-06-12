@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  obtenerEventoPorId,
-  eliminarEvento,
-} from "../services/eventosService";
+import { obtenerEventoPorId, eliminarEvento } from "../services/eventosService";
 import { useAuth } from "../hooks/useAuth";
 import "./EventosDetailPage.css";
 
@@ -58,15 +55,32 @@ function EventoDetailPage() {
 
       <div className="detalle-contenedor">
         <h1>{evento.nombreEvento}</h1>
-        <p><strong>Tipo:</strong> {evento.tipoEvento}</p>
-        <p><strong>Ubicación:</strong> {evento.ubicacion}</p>
-        <p><strong>Fecha y hora:</strong> {new Date(evento.fechaHora).toLocaleString()}</p>
-        <p><strong>Creado por:</strong> {evento.user?.username || "Desconocido"}</p>
+        <p>
+          <strong>Tipo:</strong> {evento.tipoEvento}
+        </p>
+        <p>
+          <strong>Ubicación:</strong> {evento.ubicacion}
+        </p>
+        <p>
+          <strong>Fecha y hora:</strong>{" "}
+          {new Date(evento.fechaHora).toLocaleString()}
+        </p>
+        <p>
+          <strong>Creado por:</strong> {evento.user?.username || "Desconocido"}
+        </p>
+
+        {evento.descripcion && (
+          <p>
+            <strong>Descripción:</strong> {evento.descripcion}
+          </p>
+        )}
 
         {user && evento.user?._id === user._id && (
           <div className="botones-acciones">
             <button onClick={handleEditar}>Editar</button>
-            <button onClick={handleEliminar} className="btn-eliminar">Eliminar</button>
+            <button onClick={handleEliminar} className="btn-eliminar">
+              Eliminar
+            </button>
           </div>
         )}
       </div>
