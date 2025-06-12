@@ -24,11 +24,17 @@ function EventoFormPage() {
   useEffect(() => {
     if (id) {
       obtenerEventoPorId(id).then((res) => {
+        const iso = res.data.fechaHora;
+        const fecha = new Date(iso);
+        const offset = fecha.getTimezoneOffset();
+        const localDate = new Date(fecha.getTime() - offset * 60000);
+        const localString = localDate.toISOString().slice(0, 16);
+
         setEvento({
           nombreEvento: res.data.nombreEvento,
           tipoEvento: res.data.tipoEvento,
           ubicacion: res.data.ubicacion,
-          fechaHora: res.data.fechaHora?.slice(0, 16),
+          fechaHora: localString,
           descripcion: res.data.descripcion || "",
         });
       });
@@ -43,11 +49,22 @@ function EventoFormPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const [fecha, hora] = evento.fechaHora.split("T");
+      const [year, month, day] = fecha.split("-");
+      const [hour, minute] = hora.split(":");
+      const fechaLocal = new Date(year, month - 1, day, hour, minute);
+
+      const eventoFinal = {
+        ...evento,
+        fechaHora: fechaLocal.toISOString(),
+      };
+
       if (id) {
-        await actualizarEvento(id, evento);
+        await actualizarEvento(id, eventoFinal);
       } else {
-        await crearEvento({ ...evento, user: user._id });
+        await crearEvento({ ...eventoFinal, user: user._id });
       }
+
       navigate("/eventos");
     } catch (error) {
       console.error("Error al guardar el evento", error);
